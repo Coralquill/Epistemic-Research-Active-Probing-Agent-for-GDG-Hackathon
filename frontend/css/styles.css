@@ -1,0 +1,120 @@
+/* Modern Dark-Mode Styles for Epistemic Agent Dashboard */
+
+:root {
+  --bg-primary: #0a0e17;
+  --bg-secondary: #121826;
+  --bg-card: #182234;
+  --border-color: #243048;
+  --accent-cyan: #00f2fe;
+  --accent-blue: #4facfe;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --accent-amber: #f59e0b;
+  --accent-purple: #8b5cf6;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+  background: rgba(24, 34, 52, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.glass-card:hover {
+  border-color: rgba(79, 172, 254, 0.4);
+}
+
+/* Hero Verified Glow Card */
+.verified-hero-card {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(15, 23, 42, 0.95) 50%, rgba(6, 182, 212, 0.12) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  box-shadow: 0 0 35px rgba(16, 185, 129, 0.18), 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Terminal Viewer */
+.terminal-window {
+  background: #05080f;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #38bdf8;
+  padding: 12px;
+  overflow-y: auto;
+  max-height: 260px;
+}
+
+/* Pulse Glow Animation */
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 5px rgba(0, 242, 254, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(0, 242, 254, 0.6); }
+  100% { box-shadow: 0 0 5px rgba(0, 242, 254, 0.2); }
+}
+
+.pulsing-glow {
+  animation: pulseGlow 2s infinite;
+}
+
+/* D3 Graph Canvas */
+#dag-container {
+  width: 100%;
+  height: 320px;
+  background: radial-gradient(circle at center, #131c2e 0%, #0a0e17 100%);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Badge Indicators */
+.badge-root {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.badge-scraper {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.badge-regime {
+  background: rgba(139, 92, 246, 0.2);
+  color: #c084fc;
+  border: 1px solid rgba(139, 92, 246, 0.4);
+}

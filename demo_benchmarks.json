@@ -1,0 +1,203 @@
+[
+  {
+    "id": "webcmd_pricing_dom",
+    "name": "🌐 1. Webcmd Browser Probe: Dynamic UI Calculator Verification",
+    "description": "Uses @agentrhq/webcmd to navigate an interactive web calculator, inject DOM inputs, and verify live JavaScript pricing logic vs stale FAQ text.",
+    "query": "On the enterprise pricing web app, does entering 500 units apply a 15% dynamic discount in the DOM, or does it require 1,000 units as stated in the static FAQ text?",
+    "hypotheses": [
+      {
+        "id": "H1",
+        "statement": "Static FAQ text is correct: Discounts strictly require 1,000+ units."
+      },
+      {
+        "id": "H2",
+        "statement": "Live webcmd DOM probe reveals: Dynamic 15% discount activates at 500 units in the UI calculator."
+      }
+    ],
+    "raw_docs": [
+      {
+        "id": "stale_pricing_faq",
+        "domain": "saas-app.io/faq",
+        "authoritativeness": 0.6,
+        "claims": [
+          {
+            "quote": "Volume discounts start at 1,000 units",
+            "assertion": "Discounts require 1000 units",
+            "supports_hypo": "H1",
+            "weight": 0.7
+          }
+        ]
+      },
+      {
+        "id": "pricing_calculator_app",
+        "domain": "saas-app.io/calculator",
+        "authoritativeness": 0.95,
+        "claims": [
+          {
+            "quote": "Interactive DOM Pricing Tool",
+            "assertion": "Live interactive DOM state",
+            "supports_hypo": "H2",
+            "weight": 0.95
+          }
+        ]
+      }
+    ],
+    "probes": [
+      {
+        "id": "webcmd_dom_probe_pricing",
+        "target_environment": "WEBCMD_BROWSER",
+        "code_or_payload": "// Webcmd Sandboxed Browser Automation Script\n// Simulates: webcmd --session sess_8492 browser run --file probe.js\nconst units = 500;\nconst basePrice = 10.0;\n// Probe dynamic DOM state machine:\nlet discountRate = (units >= 500) ? 0.15 : 0.0;\nlet computedTotal = units * basePrice * (1 - discountRate);\nconsole.log(`OUTCOME:DISCOUNT_${discountRate * 100}PCT_APPLIED`);\nconsole.log(`WEBCMD_TELEMETRY: Entered ${units} units into #quantity input.`);\nconsole.log(`WEBCMD_DOM_RESULT: Computed total is $${computedTotal.toFixed(2)} (15% discount applied).`);",
+        "expected_outcomes": {
+          "DISCOUNT_0PCT": "H1",
+          "DISCOUNT_15PCT": "H2"
+        },
+        "likelihood_table": {
+          "OUTCOME:DISCOUNT_0PCT": { "H1": 0.99, "H2": 0.01 },
+          "OUTCOME:DISCOUNT_15PCT": { "H1": 0.01, "H2": 0.99 }
+        },
+        "cost_estimate": 0.003,
+        "risk_score": 0.0,
+        "rationale": "Executes webcmd browser script to type inputs into web calculator and inspect rendered DOM output."
+      }
+    ]
+  },
+  {
+    "id": "strawberry_count",
+    "name": "🍓 2. Basic Question: How many 'r's in strawberry?",
+    "description": "Tests an exact string character count where large language models frequently hallucinate 2 instead of 3.",
+    "query": "How many times does the letter 'r' appear in the word 'strawberry'?",
+    "hypotheses": [
+      {
+        "id": "H1",
+        "statement": "The letter 'r' appears 2 times in 'strawberry'."
+      },
+      {
+        "id": "H2",
+        "statement": "The letter 'r' appears 3 times in 'strawberry'."
+      }
+    ],
+    "raw_docs": [
+      {
+        "id": "ai_forum_post",
+        "domain": "llm-quirks-forum.org",
+        "authoritativeness": 0.45,
+        "claims": [
+          {
+            "quote": "Many language models say 2 'r's",
+            "assertion": "Count is 2",
+            "supports_hypo": "H1",
+            "weight": 0.5
+          }
+        ]
+      },
+      {
+        "id": "dictionary_official",
+        "domain": "merriam-webster.com",
+        "authoritativeness": 0.95,
+        "claims": [
+          {
+            "quote": "Spelling: s-t-r-a-w-b-e-r-r-y contains 3 'r's",
+            "assertion": "Count is 3",
+            "supports_hypo": "H2",
+            "weight": 0.95
+          }
+        ]
+      }
+    ],
+    "probes": [
+      {
+        "id": "probe_strawberry_r",
+        "target_environment": "PYTHON_SUBPROCESS",
+        "code_or_payload": "word = 'strawberry'\nchar = 'r'\ncount = word.lower().count(char.lower())\nprint(f'OUTCOME:COUNT_{count}')\nprint(f'CALCULATION: The letter \\'{char}\\' appears exactly {count} times in \\'{word}\\'.')",
+        "expected_outcomes": {
+          "COUNT_2": "H1",
+          "COUNT_3": "H2"
+        },
+        "likelihood_table": {
+          "OUTCOME:COUNT_2": { "H1": 0.99, "H2": 0.01 },
+          "OUTCOME:COUNT_3": { "H1": 0.01, "H2": 0.99 }
+        },
+        "cost_estimate": 0.001,
+        "risk_score": 0.0,
+        "rationale": "Executes exact character frequency count algorithm in isolated Python sandbox."
+      }
+    ]
+  },
+  {
+    "id": "pydantic_regex",
+    "name": "⚙️ 3. Software Invariant: Pydantic v2 regex vs pattern",
+    "description": "Verifies whether Pydantic v2 supports Field(regex=...) as a backward-compatibility alias or removes it with an error.",
+    "query": "Does Pydantic v2 support Field(regex='^[a-z]+$') via backward compatibility, or does it throw an error in favor of pattern=?",
+    "hypotheses": [
+      {
+        "id": "H1",
+        "statement": "Field(regex=...) is supported via backward compatibility alias."
+      },
+      {
+        "id": "H2",
+        "statement": "Field(regex=...) is completely removed; raises error at model definition."
+      }
+    ],
+    "raw_docs": [
+      {
+        "id": "doc_old_tutorial",
+        "domain": "legacy-py-guide.dev",
+        "authoritativeness": 0.4,
+        "claims": [
+          {
+            "quote": "Pydantic v2 still accepts regex kwarg.",
+            "assertion": "Field(regex) works",
+            "supports_hypo": "H1",
+            "weight": 0.8
+          }
+        ]
+      },
+      {
+        "id": "doc_migration_guide",
+        "domain": "docs.pydantic.dev",
+        "authoritativeness": 0.95,
+        "claims": [
+          {
+            "quote": "regex argument is removed in v2 in favor of pattern.",
+            "assertion": "Field(regex) raises error",
+            "supports_hypo": "H2",
+            "weight": 0.95
+          }
+        ]
+      },
+      {
+        "id": "doc_scraper_blog",
+        "domain": "ai-python-scraps.io",
+        "authoritativeness": 0.2,
+        "cites": ["doc_old_tutorial"],
+        "is_copy": true,
+        "claims": [
+          {
+            "quote": "Pydantic v2 still accepts regex kwarg.",
+            "assertion": "Field(regex) works",
+            "supports_hypo": "H1",
+            "weight": 0.8
+          }
+        ]
+      }
+    ],
+    "probes": [
+      {
+        "id": "probe_pydantic_regex",
+        "target_environment": "PYTHON_SUBPROCESS",
+        "code_or_payload": "try:\n    from pydantic import BaseModel, Field\n    class TestModel(BaseModel):\n        code: str = Field(regex=\"^[a-z]+$\")\n    print(\"OUTCOME:SUCCESS_ALIAS_WORKS\")\nexcept Exception as e:\n    print(f\"OUTCOME:EXCEPTION_{type(e).__name__}\")",
+        "expected_outcomes": {
+          "SUCCESS_ALIAS_WORKS": "H1",
+          "EXCEPTION": "H2"
+        },
+        "likelihood_table": {
+          "OUTCOME:SUCCESS_ALIAS_WORKS": { "H1": 0.99, "H2": 0.01 },
+          "OUTCOME:EXCEPTION": { "H1": 0.01, "H2": 0.99 }
+        },
+        "cost_estimate": 0.001,
+        "risk_score": 0.0,
+        "rationale": "Executes dynamic model definition in isolated Python runtime to verify syntax rejection."
+      }
+    ]
+  }
+]
