@@ -3,6 +3,13 @@
  * Benchmark Controller, UI State Manager & Rich Output Card Renderer
  */
 
+// ── API Configuration ──────────────────────────────────────────────────────
+// When deployed: replace "" with your Render backend URL, e.g.:
+//   "https://epistemic-agent-api.onrender.com"
+// When running locally: keep it as "" (uses same-origin requests)
+const API_BASE_URL = "https://epistemic-research-active-probing-agent.onrender.com";
+// ──────────────────────────────────────────────────────────────────────────
+
 let benchmarks = [];
 let selectedBenchmark = null;
 let ws = null;
