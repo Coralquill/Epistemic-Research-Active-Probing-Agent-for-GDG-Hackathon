@@ -1,11 +1,11 @@
-# 🔬 Epistemic Research & Active Experimentation Agent
+#  Epistemic Research & Active Experimentation Agent
 ### *Powered by @agentrhq/webcmd Browser Infrastructure*
 
 An uncertainty-aware, hypothesis-testing research agent with full-stack interactive visualization, Provenance DAG de-duplication, and **`webcmd` browser automation**.
 
 ---
 
-## 🤝 The Core Synergy: Epistemic Agent + Webcmd
+##  The Core Synergy: Epistemic Agent + Webcmd
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────┐
@@ -32,7 +32,7 @@ An uncertainty-aware, hypothesis-testing research agent with full-stack interact
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 epistemic-agent/
@@ -63,7 +63,7 @@ epistemic-agent/
 
 ---
 
-## 🚀 How to Run the Web Dashboard
+##  How to Run the Web Dashboard
 
 ### 1. Start the Server:
 ```bash
