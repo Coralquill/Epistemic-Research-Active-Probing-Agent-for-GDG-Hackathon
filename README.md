@@ -5,7 +5,7 @@ An uncertainty-aware, hypothesis-testing research agent with full-stack interact
 
 ---
 
-##  The Core Synergy: Epistemic Agent + Webcmd
+## The Core Synergy: Epistemic Agent + Webcmd
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────┐
