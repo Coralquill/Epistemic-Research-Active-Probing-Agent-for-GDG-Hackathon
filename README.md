@@ -5,7 +5,7 @@ An uncertainty-aware, hypothesis-testing research agent with full-stack interact
 
 ---
 
-##  The Core Synergy: Epistemic Agent + Webcmd
+## The Core Synergy: Epistemic Agent + Webcmd
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────┐
@@ -70,7 +70,7 @@ epistemic-agent/
 cd /Users/vedansh/.gemini/antigravity/scratch/epistemic-agent
 python3 simple_server.py
 ```
-👉 Open **`http://127.0.0.1:8080`** in your browser.
+Open **`http://127.0.0.1:8080`** in your browser.
 
 ### 2. Select the Webcmd Benchmark:
 In the dropdown, choose **`🌐 1. Webcmd Browser Probe: Dynamic UI Calculator Verification`** and click **`🚀 Execute Epistemic Loop`** to watch the live `webcmd` browser automation in action!
